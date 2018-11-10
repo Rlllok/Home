@@ -1,0 +1,1 @@
+/usr/bin/cc -std=c11 -g  -rdynamic CMakeFiles/lab2.dir/scanner_db.c.o CMakeFiles/lab2.dir/src/scanner.c.o  -o lab2 

@@ -1,0 +1,24 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+../include/scanner.h
+stdio.h
+-
+string.h
+-
+stdlib.h
+-
+
+/home/rlllok/Git/Home/University/Lab/OOPlabs/lab2/scanner_db.c
+scanner.h
+/home/rlllok/Git/Home/University/Lab/OOPlabs/lab2/scanner.h
+
+/home/rlllok/Git/Home/University/Lab/OOPlabs/lab2/src/scanner.c
+scanner.h
+/home/rlllok/Git/Home/University/Lab/OOPlabs/lab2/src/scanner.h
+
