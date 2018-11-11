@@ -1,3 +1,0 @@
-/home/rlllok/Git/Home/University/Lab/OOPlabs/lab2/build/CMakeFiles/rebuild_cache.dir
-/home/rlllok/Git/Home/University/Lab/OOPlabs/lab2/build/CMakeFiles/lab2.dir
-/home/rlllok/Git/Home/University/Lab/OOPlabs/lab2/build/CMakeFiles/edit_cache.dir
