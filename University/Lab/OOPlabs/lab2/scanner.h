@@ -1,3 +1,10 @@
+/************************************************************************
+*file: scanner.h
+*purpose: declarations for functions, types, constants
+*author: Novikov Alexander KV-72
+*written: 03/11/2018
+*last modified: 11/11/2018
+************************************************************************/
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>

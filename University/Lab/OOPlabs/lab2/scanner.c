@@ -1,3 +1,9 @@
+/************************************************************************
+*file: Scanner.c
+*author: Novikov Alexander KV-72
+*written: 03/11/2018
+*last modified: 11/11/2018
+************************************************************************/
 #include "scanner.h"
 
 int creat_db(const char* cvs, const char* db)
@@ -39,11 +45,11 @@ int creat_db(const char* cvs, const char* db)
         scaninfo.id = id;
         id++;
         strcpy(scaninfo.manufacturer, buffElements[0]);
-        scaninfo.year = atoi(buffElements[2]);
+        scaninfo.year = strtol(buffElements[2], NULL, 10);
         strcpy(scaninfo.model, buffElements[1]);
-        scaninfo.price = atof(buffElements[3]);
-        scaninfo.x_size = atoi(buffElements[4]);
-        scaninfo.y_size = atoi(buffElements[5]);
+        scaninfo.price = strtof(buffElements[3], NULL);
+        scaninfo.x_size = strtol(buffElements[4], NULL, 10);
+        scaninfo.y_size = strtol(buffElements[5], NULL, 10);
 
         fwrite(&scaninfo, sizeof(scaninfo), 1, dbfile);
     }
@@ -172,11 +178,12 @@ int make_index(const char* db, const char* field_name)
     FILE *idxfile = fopen(idxname, "w + b");
     for(int i = 0; i < scanNum; i++)
         fwrite(&indexes[i], sizeof(indexes[i]), 1, idxfile);
-    free(indexes);
-    rewind(idxfile);
 
     fclose(idxfile);
     fclose(dbfile);
+    free(indexes);
+    rewind(idxfile);
+
 
     return 1;
 }
@@ -245,6 +252,7 @@ void del_scanner(const char *db, int id)
     rename("buff.db", db);
 
     fclose(buffFile);
+    fclose(dbfile);
 
     reindex(db);
 }
@@ -253,7 +261,7 @@ void add_scanner(const char *db, const char *scanner_str)
     if (db == NULL || scanner_str == NULL)
         return;
 
-    FILE *dbfile = fopen(db, "r b");
+    FILE *dbfile = fopen(db, "rb");
     int scanNum = 0;
     fread(&scanNum, sizeof(scanNum), 1, dbfile);
     fclose(dbfile);
@@ -275,11 +283,11 @@ void add_scanner(const char *db, const char *scanner_str)
 
     buffScanInfo.id = scanNum;
     strcpy(buffScanInfo.manufacturer, buffElements[0]);
-    buffScanInfo.year = atoi(buffElements[2]);
+    buffScanInfo.year = strtol(buffElements[2], NULL, 10);
     strcpy(buffScanInfo.model, buffElements[1]);
-    buffScanInfo.price = atof(buffElements[3]);
-    buffScanInfo.x_size = atoi(buffElements[4]);
-    buffScanInfo.y_size = atoi(buffElements[5]);
+    buffScanInfo.price = strtof(buffElements[3], NULL);
+    buffScanInfo.x_size = strtol(buffElements[4], NULL, 10);
+    buffScanInfo.y_size = strtol(buffElements[5], NULL, 10);
 
     fwrite(&buffScanInfo, sizeof(buffScanInfo), 1, dbfile);
 
@@ -303,7 +311,7 @@ void printf_db(const char *db)
         fprintf(txtfile, "%s ", buffScanInfo.manufacturer);
         fprintf(txtfile, "%i ", buffScanInfo.year);
         fprintf(txtfile, "%s ", buffScanInfo.model);
-        fprintf(txtfile, "%f ", buffScanInfo.price);
+        fprintf(txtfile, "%g ", buffScanInfo.price);
         fprintf(txtfile, "%i ", buffScanInfo.x_size);
         fprintf(txtfile, "%i \n", buffScanInfo.y_size);
     }
@@ -330,7 +338,7 @@ RECORD_SET* select1(const char *db, const char *field, const char *value)
             record_set->rec_nmb++;
             record_set->recs = (SCAN_INFO*)realloc(record_set->recs, record_set->rec_nmb * sizeof(SCAN_INFO));
             record_set->recs[record_set->rec_nmb - 1] = buffScanInfo;
-        } else if (strcmp(field, "year") == 0 && buffScanInfo.year == atoi(value)) {
+        } else if (strcmp(field, "year") == 0 && buffScanInfo.year == strtol(value, NULL, 10)) {
             record_set->rec_nmb++;
             record_set->recs = (SCAN_INFO*)realloc(record_set->recs, record_set->rec_nmb * sizeof(SCAN_INFO));
             record_set->recs[record_set->rec_nmb - 1] = buffScanInfo;
@@ -338,15 +346,15 @@ RECORD_SET* select1(const char *db, const char *field, const char *value)
             record_set->rec_nmb++;
             record_set->recs = (SCAN_INFO*)realloc(record_set->recs, record_set->rec_nmb * sizeof(SCAN_INFO));
             record_set->recs[record_set->rec_nmb - 1] = buffScanInfo;
-        } else if (strcmp(field, "price") == 0 && buffScanInfo.price == atof(value)) {
+        } else if (strcmp(field, "price") == 0 && buffScanInfo.price == strtof(value, NULL)) {
             record_set->rec_nmb++;
             record_set->recs = (SCAN_INFO*)realloc(record_set->recs, record_set->rec_nmb * sizeof(SCAN_INFO));
             record_set->recs[record_set->rec_nmb - 1] = buffScanInfo;
-        } else if (strcmp(field, "x_size") == 0 && buffScanInfo.x_size == atoi(value)) {
+        } else if (strcmp(field, "x_size") == 0 && buffScanInfo.x_size == strtol(value, NULL, 10)) {
             record_set->rec_nmb++;
             record_set->recs = (SCAN_INFO*)realloc(record_set->recs, record_set->rec_nmb * sizeof(SCAN_INFO));
             record_set->recs[record_set->rec_nmb - 1] = buffScanInfo;
-        } else if (strcmp(field, "y_size") == 0 && buffScanInfo.y_size == atoi(value)) {
+        } else if (strcmp(field, "y_size") == 0 && buffScanInfo.y_size == strtol(value, NULL, 10)) {
             record_set->rec_nmb++;
             record_set->recs = (SCAN_INFO*)realloc(record_set->recs, record_set->rec_nmb * sizeof(SCAN_INFO));
             record_set->recs[record_set->rec_nmb - 1] = buffScanInfo;
@@ -369,7 +377,7 @@ void print_rec_set(RECORD_SET *rs)
         printf("%s ", rs->recs[i].manufacturer);
         printf("%i ", rs->recs[i].year);
         printf("%s ", rs->recs[i].model);
-        printf("%f ", rs->recs[i].price);
+        printf("%g ", rs->recs[i].price);
         printf("%i ", rs->recs[i].x_size);
         printf("%i \n", rs->recs[i].y_size);
     }
