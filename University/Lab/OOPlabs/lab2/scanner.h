@@ -1,3 +1,4 @@
+#pragma once
 /************************************************************************
 *file: scanner.h
 *purpose: declarations for functions, types, constants
@@ -8,20 +9,21 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <stdbool.h>
 
 typedef struct {
-    int id;
-    char manufacturer[127];
-    int year;
-    char model[127];
-    float price;
-    int x_size;
-    int y_size;
+	int id;
+	char manufacturer[127];
+	int year;
+	char model[127];
+	float price;
+	int x_size;
+	int y_size;
 } SCAN_INFO;
 
 typedef struct {
-    int rec_nmb;
-    SCAN_INFO *recs;
+	int rec_nmb;
+	SCAN_INFO *recs;
 } RECORD_SET;
 
 int creat_db(const char* cvs, const char* db);//uses information from *.cvs file to create *.db file
