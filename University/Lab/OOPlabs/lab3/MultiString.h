@@ -14,7 +14,7 @@ class MultiString{
 public:
     //constructors destructor
     MultiString();
-    MultiString(int );
+    MultiString(int);
     ~MultiString();
 
     //methods
