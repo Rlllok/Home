@@ -5,7 +5,7 @@
 
 int main()
 {
-    const int N = 8, M = 10;
+    const int N = 4, M = 5;
     int** matrix = (int**)malloc(N * sizeof(int*));
     for (int i = 0; i < N; i++)
         matrix[i] = (int*) malloc(M * sizeof(int));
@@ -19,6 +19,12 @@ int main()
     printf("max value in column %d: %d\n", column, matrix[lastPosition][column]);
 
     sortedMatrix(matrix, N, M);
+    printMatrix(matrix, N, M);
+    lastPosition = lastMaxInColumnPosition(matrix, N, M, column);
+    printf("max position in column %d: [%d][%d]\n", column, lastPosition, column);
+    printf("max value in column %d: %d\n", column, matrix[lastPosition][column]);
+
+    inputMatrix(matrix, N, M);
     printMatrix(matrix, N, M);
     lastPosition = lastMaxInColumnPosition(matrix, N, M, column);
     printf("max position in column %d: [%d][%d]\n", column, lastPosition, column);
