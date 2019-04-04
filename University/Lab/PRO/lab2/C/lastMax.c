@@ -10,7 +10,6 @@ int lastMaxInColumnPosition(int** matrix, int N, int M, int column)
             max = matrix[i][column];
             position = i;
         }
-
     }
 
     return position;

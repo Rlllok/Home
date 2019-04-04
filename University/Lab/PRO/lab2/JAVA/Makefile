@@ -1,4 +1,4 @@
-.PHONY: clean
+.PHONY: clean Jar
 
 Lab2.class: Lab2.java Inp/Input.class Output/Output.class LastMax/LastMax.class
 	javac Lab2.java

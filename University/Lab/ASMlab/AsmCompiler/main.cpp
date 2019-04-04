@@ -4,16 +4,8 @@
 
 int main()
 {
-    std::string str = "mov      eax,         12\n";
-    Analazer scanner(str);
-    int length = str.length();
-    length;
-    char char_array[length + 1];
-    strcpy(char_array, str.c_str());
-
-    for (int i = 0; i < length; i++) {
-        scanner.Analisis(str[i]);
-    }
+    Analazer scanner("test.asm");
+    scanner.Start();
 
     return 0;
 }

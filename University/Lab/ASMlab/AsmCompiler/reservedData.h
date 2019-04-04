@@ -1,15 +1,15 @@
 #pragma once
 #include <string>
+#include <vector>
 
-const char arithmeticSymbols[] = {'+', '-'};
-const char punctuationSymbols[] = {',', ':', ' '};
-const std::string keyWords[] = {
+std::vector<char> arithmeticSymbols = {'+', '-', '*', '(', ')', '[', ']', ':'};
+std::vector<char> punctuationSymbols = {',', ':', ' '};
+std::vector<std::string> keyWords = {
     "segment",
     "ends",
     "end"
 };
-
-const std::string commands[] = {
+std::vector<std::string> commands = {
     "stc",
     "inc",
     "dec",
@@ -19,4 +19,17 @@ const std::string commands[] = {
     "mov",
     "cmp",
     "jbe"
+};
+std::vector<std::string> dataDirectives = {
+    "dd",
+    "dw",
+    "db"
+};
+std::vector<std::string> registers = {
+    "eax",
+    "ebx",
+    "esi",
+    "ebp",
+    "edx",
+    "ecx"
 };
