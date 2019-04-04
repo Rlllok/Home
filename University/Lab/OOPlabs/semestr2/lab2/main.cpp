@@ -9,7 +9,7 @@ int main()
     employee.Display();
     employee.SetDepartment("Dnepr");
     employee.SetId(2);
-    employee.SetSalary(2350);
+    employee.SetSalary(500);
     employee.Display();
     std::cout << employee.GetDepartment() << '\t' << employee.GetId() << std::endl;
 
