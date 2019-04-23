@@ -11,12 +11,31 @@ Analazer::Analazer()
 {
     temp.clear();
     type = token_nothing;
+    index = 0;
 }
 
 Analazer::Analazer(std::string str)
 {
     type = token_nothing;
     fileName = str;
+    index = 0;
+}
+
+void Analazer::Start()
+{
+    std::ifstream file(this->fileName);
+    std::string line;
+    while (std::getline(file, line)) {
+        line += "\n";
+        std::cout << line << std::endl;
+        for (int i = 0; i < line.length(); i++) {
+            this->Analisis(line[i]);
+        }
+        std::cout << std::endl;
+    }
+
+    file.close();
+
 }
 
 void Analazer::GetFileName(std::string str)
@@ -24,33 +43,21 @@ void Analazer::GetFileName(std::string str)
     fileName = str;
 }
 
-void Analazer::Start()
-{
-    std::ifstream file(this->fileName);
-    char c;
-    while (file.get(c)) {
-        this->Analisis(c);
-    }
-    if (!temp.empty()) {
-        tokenAnalys(temp);
-    }
-
-    file.close();
-}
-
 void Analazer::Analisis(char lastChar)
 {
     if (this->ReservedSymbolsSearch(arithmeticSymbols, lastChar)) {
         if (temp.empty()) {
-            type = token_arithmeticSymbol;
+            type = token_Symbol;
             temp += lastChar;
             tokenAnalys(temp);
+            return;
         } else {
             tokenAnalys(temp);
             temp.clear();
             temp += lastChar;
-            type = token_arithmeticSymbol;
+            type = token_Symbol;
             tokenAnalys(temp);
+            return;
         }
     }
     if (isalpha(lastChar)) {
@@ -65,42 +72,54 @@ void Analazer::Analisis(char lastChar)
         temp += lastChar;
         return;
     }
-    if (((lastChar == ' ') || (lastChar == '\n') || (lastChar == ',')) && !temp.empty()) {
+    if (((lastChar == ' ') || (lastChar == '\n') || (lastChar == ','))) {
         tokenAnalys(temp);
+        if (lastChar == '\n')
+            index = 0;
         return;
     }
 }
 
-void Analazer::tokenAnalys(std::string str)
+Analazer::Token Analazer::tokenAnalys(std::string str)
 {
     switch (type) {
         case token_identifier:
             switch (identifierAnalysis(str, type))
             {
                 case token_keyword:
-                    std::cout << str << " is keyword. Length: " << str.length() << std::endl;
+                    std::cout << index << "  " << str << " is keyword. Length: " << str.length() << std::endl;
                     type = token_nothing;
                     temp.clear();
+                    index++;
+                    return token_keyword;
                     break;
                 case token_command:
-                    std::cout << str << " is command. Length: " << str.length() << std::endl;
+                    std::cout << index << "  " << str << " is command. Length: " << str.length() << std::endl;
                     type = token_nothing;
                     temp.clear();
+                    index++;
+                    return token_command;
                     break;
                 case token_dataDirective:
-                    std::cout << str << " is data directive. Length: " << str.length() << std::endl;
+                    std::cout << index << "  " << str << " is data directive. Length: " << str.length() << std::endl;
                     type = token_nothing;
                     temp.clear();
+                    index++;
+                    return token_dataDirective;
                     break;
                 case token_register:
-                    std::cout << str << " is register. Length: " << str.length() << std::endl;
+                    std::cout << index << "  " << str << " is register. Length: " << str.length() << std::endl;
                     type = token_nothing;
                     temp.clear();
+                    index++;
+                    return token_register;
                     break;
                 default:
-                    std::cout << str << " is identifier. Length: " << str.length() << std::endl;
+                    std::cout << index << "  " << str << " is identifier. Length: " << str.length() << std::endl;
                     type = token_nothing;
                     temp.clear();
+                    index++;
+                    return token_identifier;
                     break;
             }
             break;
@@ -108,26 +127,34 @@ void Analazer::tokenAnalys(std::string str)
             switch (str.back())
             {
                 case 'b':
-                    std::cout << str << " is bin number. Length: " << str.length() << std::endl;
+                    std::cout << index << "  " << str << " is bin number. Length: " << str.length() << std::endl;
                     type = token_nothing;
                     temp.clear();
+                    index++;
+                    return token_binumber;
                     break;
                 case 'h':
-                    std::cout << str << " is hex number. Length: " << str.length() << std::endl; 
+                    std::cout << index << "  " << str << " is hex number. Length: " << str.length() << std::endl; 
                     type = token_nothing;
                     temp.clear();
+                    index++;
+                    return token_hexnumber;
                     break;
                 default:
-                    std::cout << str << " is dec number. Length: " << str.length() << std::endl;
+                    std::cout << index << "  " << str << " is dec number. Length: " << str.length() << std::endl;
                     type = token_nothing;
                     temp.clear();
+                    index++;
+                    return token_decnumber;
                     break;
             }
             break;
-        case token_arithmeticSymbol:
-            std::cout << str << " is token_a. Length: "<< str.length() << std::endl;
+        case token_Symbol:
+            std::cout << index << "  " << str << " is token_a. Length: "<< str.length() << std::endl;
             type = token_nothing;
             temp.clear();
+            index++;
+            return token_Symbol;
             break;
     } 
 }
@@ -162,3 +189,4 @@ bool Analazer::ReservedSymbolsSearch(std::vector<char> charVector, char symbol)
         return true;
     } else return false;
 }
+

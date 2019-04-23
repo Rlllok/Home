@@ -11,7 +11,7 @@ private:
         token_hexnumber,
         token_decnumber,
         token_binumber,
-        token_arithmeticSymbol,
+        token_Symbol,
         token_keyword,
         token_command,
         token_dataDirective,
@@ -21,6 +21,7 @@ private:
     std::string temp;
     std::string fileName;
     Token type;
+    int index;
 
 public:
     Analazer();
@@ -29,7 +30,7 @@ public:
     void GetFileName(std::string);
     void StrToCharConverter(std::string);
     void Analisis(char);
-    void tokenAnalys(std::string);
+    Token tokenAnalys(std::string);
     void StrToChar(std::string);
     bool ReservedDataSearch(std::vector<std::string>, std::string);
     bool ReservedSymbolsSearch(std::vector<char>, char);

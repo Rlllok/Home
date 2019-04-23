@@ -1,5 +1,5 @@
 CC=g++
-OBJECTS=main.o Analyzer.o
+OBJECTS=main.o Analyzer.o Syntax.o
 
 .PHONY:clean run
 
