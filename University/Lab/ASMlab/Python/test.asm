@@ -1,4 +1,4 @@
-data segment
+Data segment
 hexv1 dd 0ff93h
 decv1 dw 3 + 2 * 4
 binv1 db 10000b

@@ -1,5 +1,5 @@
 CC=g++
-OBJECTS=main.o Person.o Employee.o
+OBJECTS=main.o Person.o Employee.o Manager.o Database.o
 .PHONY: clean run
 
 all:lab2

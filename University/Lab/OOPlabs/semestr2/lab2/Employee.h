@@ -3,8 +3,8 @@
 #include <string>
 #include <iostream>
 
-class Employee : public Person
-{
+
+class Employee : public Person {
 public:
     Employee();
     Employee(std::string f_name, std::string l_name, int age, int id);
