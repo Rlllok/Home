@@ -1,13 +1,13 @@
 CC=g++
-OBJECTS=main.o Iterator.o
+OBJECTS=main.o Cfile.o
 .PHONY: clean run
 
 all:lab2
 
 lab2: $(OBJECTS)
-	$(CC) -o lab2 $^
+	$(CC) -o lab2 $(OBJECTS)
 
-%.o: %.cpp
+%.o: %.cpp List.h Iterator.h
 	$(CC) -c $< -o $@
 
 clean:

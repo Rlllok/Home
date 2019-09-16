@@ -1,3 +1,9 @@
+/************************************************************************       
+ * file: Main.cpp                                                                                                          
+ * author: Novikov Alexander KV-72                                              
+ * written: 27/04/2019                                                          
+ * last modified: 30/05/2019                                                    
+ ************************************************************************/
 #include "Person.h"
 #include "Employee.h"
 #include "Manager.h"
@@ -7,36 +13,26 @@
 #include <vector>
 
 int main() {
-    // Person person("Biba", "Boba", 30);
-    // person.Display();
-    // Person person1("Biba1", "Boba1", 30);
-    // Person person2("Biba2", "Boba2", 30);
+    Database database;
+    const char filename[] = "employees.csv";
+    database.LoadFromFile(filename);
+    std::cout << std::endl;
 
-    // Employee employee;
-    // employee.Display();
+    database.ArrangeSubordinates();
+    database.DisplayAll();
+    database.FireEmployee(0);
+    std::cout << "ID 0 was deleted\n\n";
+    database.DisplayAll();
 
-    // Manager manager("Name", "L_name", 10, 1);
-    // manager.SetDepartment("Dnepr");
-    // // manager.Display();
-    // manager.AddSubordinate(person);
-    // manager.AddSubordinate(person1);
-    // manager.AddSubordinate(person2);
-    // manager.DisplaySubordinates();
-
-    // operator= overloading test
-    // Employee e;
-    // e.Display();
-    // e = employee;
-    // e.Display();
-
-    std::vector<Person*> vp;
-    Manager manager;
-    vp.push_back(&manager);
-    vp[0]->Display();
+    Employee* employee = new Employee("Jon", "Miller", 43, 10);
+    std::cout << "Add new employee Jon Miller\n\n";
+    database.DisplayAll();
     
-    // Database database;
-    // const char filename[] = "employees.csv";
-    // database.LoadFromFile(filename);
+    std::cout << "Show employees with salary equal or less than 190:\n";
+    database.ShowRecordSet(database.SQL("salary", "le", "190"));
+
+    std::cout << "Show employees with age ge than 30:\n";
+    database.ShowRecordSet(database.SQL("age", "ge", "30"));
 
     return 0;
 }
