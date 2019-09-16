@@ -1,0 +1,64 @@
+﻿0000          Data Segment                                                                    
+0000          hexv1 dd 0ff93H                                                                 
+0004          decv1 dd 3 + 2 * 4                                                              
+0008          binv1 db 10000b                                                                 
+0009          Data ends                                                                       
+                                                                                          
+0000          code segment                                                                    
+0000          ww1 dd (10+15)*3 - 8                                                            
+0004          ww2 dw 14                                                                       
+0006          begin:                                                                          
+0006          m1: jbe m2                                                                      
+000c    F9        stc                                                                         
+000d    43        inc ebx                                                                     
+000e              dec hexv1[ebx+esi]                                                          
+0015              dec ww1[eax+ebp]                                                            
+Cannot use 16bit variable on line number 16
+001d              dec ww2[eax+eax]                                                            
+0026              sub eax, ecx                                                                
+0028              and eax, decv1[eax+edx]                                                     
+002f              or es:binv1[eax+esi], 0101b                                                 
+0038              mov ecx, 0ah                                                                
+003d              cmp decv1[edx+esi], ecx                                                     
+0044              jbe m1                                                                      
+0046              m2:                                                                         
+0046          code ends                                                                       
+          end                                                                             
+
+
+
+
+Segments:
+################################################################################
+                N a m e                    Size       Length     
+
+Data                                      32 bit         9       
+
+code                                      32 bit        46       
+
+################################################################################
+
+
+Symbols:
+✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧
+                N a m e                      Type           Value          Attr      
+
+begin                                       L NEAR          0006           code      
+
+binv1                                       L BYTE          0008           Data      
+
+decv1                                       L DWORD         0004           Data      
+
+hexv1                                       L DWORD         0000           Data      
+
+m1                                          L NEAR          0006           code      
+
+m2                                          L NEAR          0046           code      
+
+ww1                                         L DWORD         0000           code      
+
+ww2                                         L WORD          0004           code      
+
+✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧✧
+
+Filename                        	Text  test.asm
