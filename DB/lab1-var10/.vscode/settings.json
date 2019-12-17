@@ -1,0 +1,15 @@
+{
+    "sqltools.connections": [
+        {
+            "database": "videocards_shop",
+            "dialect": "PostgreSQL",
+            "isActive": true,
+            "isConnected": true,
+            "name": "rlllok",
+            "password": "53340563",
+            "port": 5432,
+            "server": "localhost",
+            "username": "rlllok"
+        }
+    ]
+}
